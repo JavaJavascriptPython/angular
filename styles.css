@@ -1,0 +1,197 @@
+/* ==== VARIABLES ==== */
+:root {
+  --bg: #f5f5f5;
+  --card: #ffffff;
+  --text: #222;
+  --muted: #666;
+  --accent: dodgerblue;
+  --sidebar-bg: #fafafa; /* dark sidebar for both themes */
+  --glass: rgba(255,255,255,0.7);
+  --shadow: 0 6px 20px rgba(18,26,40,0.06);
+  --clock-size: 1.15rem;
+}
+
+/* Dark theme variables */
+.dark {
+  --bg: #0f1720;
+  --card: #1b1f2a;
+  --text: #e6eef8;
+  --muted: #9fb0cc;
+  --accent: #1e90ff;
+  --sidebar-bg: #0a101f;
+  --glass: rgba(255,255,255,0.03);
+  --shadow: 0 6px 20px rgba(2,6,23,0.7);
+}
+
+/* Base styles */
+* { box-sizing: border-box; transition: color .16s ease, background .16s ease, border-color .16s ease; }
+html, body { height:100%; margin:0; font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background:var(--bg); color:var(--text); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; }
+
+/* App layout */
+.app-shell { display: flex; height: 100vh; overflow: hidden; }
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: var(--sidebar-bg);
+  padding: 18px;
+  transition: width .28s ease, transform .28s ease, background .3s;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display:flex;
+  flex-direction:column;
+  box-shadow: var(--shadow);
+}
+.sidebar.collapsed { width: 64px; }
+.sidebar .brand { display:flex; align-items:center; gap:12px; margin-bottom:18px; }
+.brand .logo {
+  width:44px; height:44px; border-radius:10px; background:var(--accent);
+  display:flex; align-items:center; justify-content:center; color:white; font-weight:600;
+}
+
+/* nav */
+.nav { flex:1; overflow:auto; padding-right:6px; }
+.nav .nav-item {
+  display:flex; align-items:center; gap:12px; padding:10px 8px; border-radius:8px; cursor:pointer;
+  transition: background .18s ease, transform .12s ease, box-shadow .18s ease;
+  color:var(--text); margin-bottom:6px;
+}
+.nav .nav-item:hover { background: rgba(30,144,255,0.08); transform: translateX(4px); }
+.nav .nav-item .icon { width:28px; text-align:center; color:var(--accent); font-weight:700; }
+.nav .sub { margin-left:34px; margin-top:6px; margin-bottom:8px; display:block; }
+.nav .fold { display:flex; justify-content:space-between; align-items:center; }
+
+/* Sidebar theme toggle */
+.theme-toggle {
+  font-size:1.2rem;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  width:36px; height:36px; border-radius:50%; background:var(--accent); color:#fff; margin:10px auto;
+  transition: transform 0.2s;
+}
+.theme-toggle:hover { transform: scale(1.1); }
+
+/* Footer controls */
+.footer-controls { margin-top:auto; display:flex; gap:8px; flex-direction:column; }
+
+/* Main content */
+.main { flex:1; display:flex; flex-direction:column; padding:20px; overflow:auto; }
+
+/* Header */
+.header { display:flex; justify-content:space-between; align-items:center; margin-bottom:18px; }
+.clock { display:flex; align-items:center; gap:12px; }
+.clock .time { font-size: calc(var(--clock-size) * 1.8); font-weight:700; }
+.clock .day { font-size:0.85rem; color:var(--muted); }
+
+/* Grid of cards */
+.cards-grid { display:grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 110px; gap:18px; margin-bottom:20px; }
+.card {
+  background:var(--card); border-radius:12px; padding:14px; box-shadow: var(--shadow);
+  display:flex; flex-direction:column; justify-content:space-between;
+  transition: transform .18s ease, box-shadow .18s ease, background .3s;
+}
+.card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(2,6,23,0.08); }
+.card .title { color:var(--muted); font-size:0.9rem; }
+.card .value { font-size:1.5rem; font-weight:700; color:var(--text); }
+
+/* Charts area */
+.charts { display:grid; grid-template-columns: 1fr 1fr 1fr; gap:18px; margin-bottom:20px; }
+.chart-card {
+  min-height:240px; border-radius:12px; padding:12px; box-shadow: var(--shadow);
+  background:var(--card); transition: transform .32s cubic-bezier(.2,.9,.3,1), box-shadow .32s, background .3s;
+}
+.chart-card:hover { transform: translateY(-6px) scale(1.01); }
+
+/* Server response grid 5x3 */
+.server-grid { display:grid; grid-template-columns: repeat(5, 1fr); grid-auto-rows: 100px; gap:12px; }
+.server-item { background:var(--card); border-radius:10px; padding:10px; box-shadow: var(--shadow); }
+
+/* Forms (date pickers) */
+.date-controls { display:flex; gap:8px; align-items:center; margin-bottom:12px; }
+input[type="date"], input[type="text"] {
+  padding:8px 10px; border-radius:8px; border:1px solid rgba(0,0,0,0.08);
+  background:var(--glass); color:var(--text); transition: background .3s, color .3s;
+}
+
+/* Helpers */
+.badge { background:var(--accent); color:white; padding:4px 8px; border-radius:999px; font-weight:600; font-size:0.8rem; }
+.kv { display:flex; justify-content:space-between; align-items:center; }
+
+/* Animations */
+@keyframes fadeSlideUp { from { opacity:0; transform: translateY(8px); } to { opacity:1; transform: translateY(0); } }
+.fade-slide { animation: fadeSlideUp .42s cubic-bezier(.22,.9,.36,1) both; }
+.router-animate { animation: fadeSlideUp .36s ease-out both; }
+
+/* Responsive & collapse */
+@media (max-width: 1100px) { .cards-grid { grid-template-columns: repeat(2,1fr); grid-auto-rows:120px; } .charts { grid-template-columns: 1fr; } }
+@media (max-width:700px) { .cards-grid { grid-template-columns: 1fr; } .charts { grid-template-columns: 1fr; } .sidebar { width:60px; } }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Roboto', sans-serif; }
+
+
+
+/* Common pop animation for all cards */
+.card, .chart-card, .server-item {
+  transition: transform 0.25s cubic-bezier(.22,.9,.36,1), box-shadow 0.25s ease, background 0.25s ease;
+  cursor: pointer;
+}
+
+.card:hover, .chart-card:hover, .server-item:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 20px 40px rgba(2,6,23,0.12);
+}
+
+/* Optional: subtle glow on hover using accent color */
+.card:hover, .chart-card:hover, .server-item:hover {
+  border: 1px solid rgba(30,144,255,0.2);
+}
+
+/* Fade-slide animation for appear */
+.fade-slide {
+  animation: fadeSlideUp .42s cubic-bezier(.22,.9,.36,1) both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+.card-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+}
+
+.card-item {
+  flex: 1;
+  text-align: center;
+  border-right: 1px solid rgba(0,0,0,0.08); /* optional separator */
+  padding: 8px 0;
+  transition: color 0.2s, transform 0.2s;
+}
+
+.card-item:last-child {
+  border-right: none;
+}
+
+.item-title {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.item-value {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Hover effect for inner items */
+.card:hover .card-item {
+  transform: scale(1.03);
+}
+
+
