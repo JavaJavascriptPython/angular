@@ -1,0 +1,54 @@
+<div class="app-shell">
+  <aside class="sidebar" [class.collapsed]="sidebarCollapsed">
+    <div class="brand">
+      <div class="logo">DB</div>
+      <div *ngIf="!sidebarCollapsed">
+        <div style="font-weight:700">Modern Dashboard</div>
+        <div style="font-size:0.85rem;color:var(--muted)">v6 • Minimal</div>
+      </div>
+      <button (click)="toggleSidebar()" style="margin-left:auto;background:none;border:none;cursor:pointer;">☰</button>
+    </div>
+
+    <app-sidebar
+      [collapsed]="sidebarCollapsed"
+      (toggleTheme)="toggleTheme()"
+      (collapseToggle)="toggleSidebar()"
+      [dark]="dark">
+    </app-sidebar>
+
+    <div class="footer-controls" *ngIf="!sidebarCollapsed">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div><small style="color:var(--muted)">Theme</small></div>
+        <div>
+          <label style="display:flex;align-items:center;gap:8px;cursor:pointer">
+            <input type="checkbox" [checked]="dark" (change)="toggleTheme()"/>
+            <span style="font-size:0.9rem">{{ dark ? 'Dark' : 'Light' }}</span>
+          </label>
+        </div>
+      </div>
+      <div style="font-size:0.85rem;color:var(--muted);padding-top:6px">© 2025</div>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="header">
+      <div class="clock">
+        <div>
+          <div class="time">{{ timeStr }}</div>
+          <div class="day">{{ dateStr }}</div>
+        </div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:12px">
+        <div style="text-align:right">
+          <div style="font-weight:700">{{ greeting }}</div>
+          <div style="font-size:0.9rem;color:var(--muted)">Welcome back</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="route-wrapper router-animate">
+  <router-outlet></router-outlet>
+</div>
+  </main>
+</div>

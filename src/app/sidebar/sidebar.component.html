@@ -1,0 +1,32 @@
+<nav class="nav">
+  <div class="nav-item" (click)="navTo('/dashboard')">
+    <div class="icon">🏠</div>
+    <div *ngIf="!collapsed">Dashboard</div>
+  </div>
+
+  <div class="nav-item" (click)="tpsOpen = !tpsOpen">
+    <div class="icon">⚡</div>
+    <div *ngIf="!collapsed" style="flex:1">
+      <div class="fold">
+        <div>TPS</div>
+        <div style="font-size:0.85rem;color:var(--muted)">{{ tpsOpen ? '▾' : '▸' }}</div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="tpsOpen && !collapsed" class="sub">
+    <div class="nav-item" (click)="navTo('/tps/graph')">
+      <div class="icon">📈</div>
+      <div>TPS Graph</div>
+    </div>
+    <div class="nav-item" (click)="navTo('/tps/table')">
+      <div class="icon">📋</div>
+      <div>TPS Table</div>
+    </div>
+  </div>
+
+  <div class="nav-item" (click)="navTo('/server-response')">
+    <div class="icon">🗄️</div>
+    <div *ngIf="!collapsed">Server Response</div>
+  </div>
+</nav>

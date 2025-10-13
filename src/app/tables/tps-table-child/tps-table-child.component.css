@@ -1,0 +1,130 @@
+/* Container for table with scroll */
+.table-container {
+  max-height: 420px;
+  overflow: auto;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+  background: var(--card);
+  transition: background 0.3s, color 0.3s;
+}
+
+/* Table styling */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text);
+  transition: color 0.3s;
+}
+
+/* Sticky header */
+th.mat-header-cell {
+  position: sticky;
+  top: 0;
+  background: var(--card);
+  color: var(--accent);
+  font-weight: 600;
+  z-index: 2;
+  border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+/* Table rows */
+tr.mat-row {
+  transition: background 0.2s, transform 0.2s;
+}
+
+tr.mat-row:hover {
+  background: rgba(30,144,255,0.06);
+  transform: translateY(-1px);
+}
+
+/* Table cells */
+td.mat-cell {
+  padding: 12px 8px;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+}
+
+/* Search/filter input */
+.table-controls {
+  margin-bottom: 12px;
+}
+
+input[matInput] {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(0,0,0,0.1);
+  background: var(--glass);
+  color: var(--text);
+  transition: background 0.3s, color 0.3s, border-color 0.3s;
+}
+
+/* Dark theme adjustments */
+body.dark .table-container {
+  background: var(--card);
+}
+
+body.dark th.mat-header-cell {
+  background: var(--card);
+  color: var(--accent);
+}
+
+body.dark td.mat-cell {
+  color: var(--text);
+}
+
+body.dark input[matInput] {
+  background: rgba(255,255,255,0.03);
+  color: var(--text);
+  border: 1px solid #333;
+}
+
+/* Scrollbar styling for modern look */
+.table-container::-webkit-scrollbar {
+  width: 8px;
+}
+.table-container::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 6px;
+}
+.table-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Fade-slide animation for table container */
+.fade-slide {
+  animation: fadeSlideUp .42s cubic-bezier(.22,.9,.36,1) both;
+}
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* Angular Material sort header arrows customization */
+.mat-sort-header-container {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.mat-sort-header-arrow {
+  opacity: 0.6;
+  transition: color 0.3s, opacity 0.3s, transform 0.2s;
+  color: var(--accent);
+}
+
+.mat-sort-header-sorted .mat-sort-header-arrow {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+/* Hover effect on header for visual feedback */
+th.mat-header-cell:hover .mat-sort-header-arrow {
+  opacity: 1;
+}
+
+/* Dark theme adjustments */
+body.dark .mat-sort-header-arrow {
+  color: var(--accent);
+}
