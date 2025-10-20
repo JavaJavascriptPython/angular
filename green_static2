@@ -1,0 +1,468 @@
+   <!-- Main Content -->
+    <div class="main-content">
+        <!-- Topbar -->
+        <div class="topbar">
+            <div class="topbar-left">
+                <button class="mobile-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="search-bar">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Search...">
+                </div>
+            </div>
+            
+            <div class="topbar-right">
+                <button class="theme-toggle">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="greeting">Good Morning, Alex!</div>
+                <div class="datetime">
+                    <div class="date" id="current-date">Monday, June 12, 2023</div>
+                    <div class="time" id="current-time">10:30:45 AM</div>
+                </div>
+                <div class="user-profile">
+                    <div class="user-avatar">AJ</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Dashboard Content -->
+        <div class="dashboard-content">
+            <h2 class="section-title">Dashboard Overview</h2>
+            
+            <!-- Cards Row -->
+            <div class="cards-row">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Total Revenue</div>
+                        <div class="card-icon">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">$24,580</div>
+                    <div class="card-growth growth-positive">
+                        <i class="fas fa-arrow-up"></i> 12.5% from last month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">New Users</div>
+                        <div class="card-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">1,248</div>
+                    <div class="card-growth growth-positive">
+                        <i class="fas fa-arrow-up"></i> 8.2% from last month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Orders</div>
+                        <div class="card-icon">
+                            <i class="fas fa-shopping-bag"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">356</div>
+                    <div class="card-growth growth-negative">
+                        <i class="fas fa-arrow-down"></i> 3.4% from last month
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">Conversion Rate</div>
+                        <div class="card-icon">
+                            <i class="fas fa-percentage"></i>
+                        </div>
+                    </div>
+                    <div class="card-value">4.8%</div>
+                    <div class="card-growth growth-positive">
+                        <i class="fas fa-arrow-up"></i> 1.2% from last month
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Big Card and Table Row -->
+            <div class="cards-row">
+                <div class="card big-card">
+                    <div class="card-header">
+                        <div class="card-title">Performance Overview</div>
+                    </div>
+                    <div class="chart-container" style="padding: 0; border: none; box-shadow: none;">
+                        <canvas id="performanceChart"></canvas>
+                    </div>
+                </div>
+                
+                <div class="table-container">
+                    <div class="card-title">Recent Transactions</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Customer</th>
+                                <th>Date</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>#TRX-7812</td>
+                                <td>John Smith</td>
+                                <td>Jun 12, 2023</td>
+                                <td>$248.00</td>
+                                <td><span class="status status-active">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-7811</td>
+                                <td>Sarah Johnson</td>
+                                <td>Jun 11, 2023</td>
+                                <td>$189.50</td>
+                                <td><span class="status status-pending">Pending</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-7810</td>
+                                <td>Michael Brown</td>
+                                <td>Jun 10, 2023</td>
+                                <td>$420.00</td>
+                                <td><span class="status status-active">Completed</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-7809</td>
+                                <td>Emily Davis</td>
+                                <td>Jun 9, 2023</td>
+                                <td>$312.75</td>
+                                <td><span class="status status-inactive">Cancelled</span></td>
+                            </tr>
+                            <tr>
+                                <td>#TRX-7808</td>
+                                <td>Robert Wilson</td>
+                                <td>Jun 8, 2023</td>
+                                <td>$156.20</td>
+                                <td><span class="status status-active">Completed</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <!-- Charts Row -->
+            <div class="chart-row">
+                <div class="chart-container">
+                    <div class="chart-title">Sales Overview</div>
+                    <canvas id="salesChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Traffic Sources</div>
+                    <canvas id="trafficChart"></canvas>
+                </div>
+                
+                <div class="chart-container">
+                    <div class="chart-title">Revenue by Category</div>
+                    <canvas id="revenueChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme toggle functionality
+        const themeToggle = document.querySelector('.theme-toggle');
+        const themeIcon = themeToggle.querySelector('i');
+        
+        // Check for saved theme or prefer-color-scheme
+        const savedTheme = localStorage.getItem('theme') || 
+            (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        
+        // Apply the saved theme
+        document.documentElement.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        });
+        
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
+
+        // Mobile toggle functionality
+        const mobileToggle = document.querySelector('.mobile-toggle');
+        const sidebar = document.querySelector('.sidebar');
+        const mobileOverlay = document.querySelector('.mobile-overlay');
+        
+        mobileToggle.addEventListener('click', function() {
+            sidebar.classList.add('mobile-open');
+            mobileOverlay.classList.add('active');
+        });
+
+        mobileOverlay.addEventListener('click', function() {
+            sidebar.classList.remove('mobile-open');
+            mobileOverlay.classList.remove('active');
+        });
+
+        // Menu item click functionality
+        const menuItems = document.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all menu items
+                menuItems.forEach(i => i.classList.remove('active'));
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Toggle submenu if it exists
+                const submenu = this.nextElementSibling;
+                if (submenu && submenu.classList.contains('submenu')) {
+                    // Close all other submenus
+                    document.querySelectorAll('.submenu').forEach(s => {
+                        if (s !== submenu) s.classList.remove('open');
+                    });
+                    
+                    // Toggle current submenu
+                    submenu.classList.toggle('open');
+                }
+                
+                // Close sidebar on mobile after selection
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove('mobile-open');
+                    mobileOverlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format date
+            const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('current-date').textContent = now.toLocaleDateString('en-US', options);
+            
+            // Format time
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            let seconds = now.getSeconds();
+            const ampm = hours >= 12 ? 'PM' : 'AM';
+            
+            hours = hours % 12;
+            hours = hours ? hours : 12;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            seconds = seconds < 10 ? '0' + seconds : seconds;
+            
+            document.getElementById('current-time').textContent = `${hours}:${minutes}:${seconds} ${ampm}`;
+        }
+
+        // Update greeting based on time of day
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            const greeting = document.querySelector('.greeting');
+            
+            if (hour < 12) {
+                greeting.textContent = 'Good Morning, Alex!';
+            } else if (hour < 18) {
+                greeting.textContent = 'Good Afternoon, Alex!';
+            } else {
+                greeting.textContent = 'Good Evening, Alex!';
+            }
+        }
+
+        // Initialize date/time and update every second
+        updateDateTime();
+        updateGreeting();
+        setInterval(updateDateTime, 1000);
+
+        // Charts
+        // Performance Chart
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(performanceCtx, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Revenue',
+                    data: [12000, 15000, 18000, 22000, 24000, 24580],
+                    borderColor: '#10B981',
+                    backgroundColor: document.documentElement.getAttribute('data-theme') === 'dark' 
+                        ? 'rgba(16, 185, 129, 0.1)' 
+                        : 'rgba(16, 185, 129, 0.05)',
+                    tension: 0.4,
+                    fill: true,
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: document.documentElement.getAttribute('data-theme') === 'dark' 
+                                ? '#9CA3AF' 
+                                : '#6B7280'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: document.documentElement.getAttribute('data-theme') === 'dark' 
+                                ? '#9CA3AF' 
+                                : '#6B7280'
+                        }
+                    }
+                },
+                elements: {
+                    point: {
+                        radius: 0
+                    }
+                }
+            }
+        });
+
+        // Sales Chart
+        const salesCtx = document.getElementById('salesChart').getContext('2d');
+        const salesChart = new Chart(salesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                datasets: [{
+                    label: 'Sales',
+                    data: [3200, 4500, 3800, 5100, 6200, 7800, 6500],
+                    backgroundColor: '#10B981',
+                    borderColor: '#10B981',
+                    borderWidth: 0,
+                    borderRadius: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        grid: {
+                            drawBorder: false
+                        },
+                        ticks: {
+                            color: document.documentElement.getAttribute('data-theme') === 'dark' 
+                                ? '#9CA3AF' 
+                                : '#6B7280'
+                        }
+                    },
+                    x: {
+                        grid: {
+                            display: false
+                        },
+                        ticks: {
+                            color: document.documentElement.getAttribute('data-theme') === 'dark' 
+                                ? '#9CA3AF' 
+                                : '#6B7280'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Traffic Chart
+        const trafficCtx = document.getElementById('trafficChart').getContext('2d');
+        const trafficChart = new Chart(trafficCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Direct', 'Social', 'Referral', 'Organic'],
+                datasets: [{
+                    data: [35, 25, 20, 20],
+                    backgroundColor: [
+                        '#10B981',
+                        '#3B82F6',
+                        '#8B5CF6',
+                        '#F59E0B'
+                    ],
+                    borderWidth: 0,
+                    spacing: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: document.documentElement.getAttribute('data-theme') === 'dark' 
+                                ? '#9CA3AF' 
+                                : '#6B7280'
+                        }
+                    }
+                },
+                cutout: '70%'
+            }
+        });
+
+        // Revenue Chart
+        const revenueCtx = document.getElementById('revenueChart').getContext('2d');
+        const revenueChart = new Chart(revenueCtx, {
+            type: 'polarArea',
+            data: {
+                labels: ['Electronics', 'Fashion', 'Home', 'Books', 'Toys'],
+                datasets: [{
+                    data: [35, 25, 15, 15, 10],
+                    backgroundColor: [
+                        'rgba(16, 185, 129, 0.7)',
+                        'rgba(59, 130, 246, 0.7)',
+                        'rgba(139, 92, 246, 0.7)',
+                        'rgba(245, 158, 11, 0.7)',
+                        'rgba(239, 68, 68, 0.7)'
+                    ],
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: {
+                            color: document.documentElement.getAttribute('data-theme') === 'dark' 
+                                ? '#9CA3AF' 
+                                : '#6B7280'
+                        }
+                    }
+                }
+            }
+        });
+
+        // Update chart colors when theme changes
+        themeToggle.addEventListener('click', function() {
+            setTimeout(() => {
+                performanceChart.update();
+                salesChart.update();
+                trafficChart.update();
+                revenueChart.update();
+            }, 100);
+        });
+    </script>
+</body>
+</html>
